@@ -1,18 +1,18 @@
 const express = require('express');
 const models = require('./models');
-const expressGraphQL = require('express-graphql');
+const expressGraphQL = require('express-graphql').graphqlHTTP
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./services/auth');
-const MongoStore = require('connect-mongo')(session);
 const schema = require('./schema/schema');
+const MongoStore = require('connect-mongo');
 
 // Create a new Express application
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = '';
+const MONGO_URI = 'mongodb+srv://vasunep0306:colts101@cluster0.rjesq.mongodb.net/lyricaldb?retryWrites=true&w=majority';
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -29,15 +29,26 @@ mongoose.connection
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: 'aaabbbccc',
-  store: new MongoStore({
-    url: MONGO_URI,
-    autoReconnect: true
+// app.use(session({
+//   resave: true,
+//   saveUninitialized: true,
+//   secret: 'aaabbbccc',
+//   store: new MongoStore({
+//     url: MONGO_URI,
+//     autoReconnect: true
+//   })
+// }));
+
+app.use(
+  session({
+      secret: 'aaabbbccc',
+      resave: true,
+      saveUninitialized: false,
+      store: MongoStore.create({
+          mongoUrl: MONGO_URI
+      })
   })
-}));
+);
 
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
