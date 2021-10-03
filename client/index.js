@@ -9,6 +9,7 @@ import { ApolloProvider } from 'react-apollo';
 
 import App from "./components/App";
 import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignUpForm";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -23,10 +24,8 @@ const Root = () => {
     <ApolloProvider client={apolloClient}>
     <Router history={hashHistory}>
       <Route path="/" component={App}>
-        
-        
         <Route path="login" component={LoginForm} />
-        
+        <Route path="signup" component={SignUpForm} />
       </Route>
     </Router>
   </ApolloProvider>
