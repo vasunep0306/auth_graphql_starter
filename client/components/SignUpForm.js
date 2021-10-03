@@ -3,6 +3,7 @@ import AuthForm from "./AuthForm";
 import { graphql } from "react-apollo";
 import mutation from "../mutations/SignUp";
 import query from "../queries/CurrentUser";
+import { hashHistory } from "react-router";
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -19,6 +20,17 @@ class SignUpForm extends Component {
       const errors = res.graphQLErrors.map(err => err.message);
       this.setState({ errors });
     });
+  }
+
+  /**
+   * this.props is the old set of props
+   * nextProps is the new set of props
+   *
+   */
+   componentDidUpdate() {
+    if (this.props.data.user) {
+      hashHistory.push("/dashboard");
+    }
   }
 
   render() {
