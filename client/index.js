@@ -10,6 +10,7 @@ import { ApolloProvider } from 'react-apollo';
 import App from "./components/App";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
+import Dashboard from "./components/Dashboard";
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -26,6 +27,7 @@ const Root = () => {
       <Route path="/" component={App}>
         <Route path="login" component={LoginForm} />
         <Route path="signup" component={SignUpForm} />
+        <Route path="dashboard" component={Dashboard} />
       </Route>
     </Router>
   </ApolloProvider>
